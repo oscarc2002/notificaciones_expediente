@@ -1,0 +1,52 @@
+REQUISITOS
+-Se necesita tener una cuenta de Facebook
+-Se necesita crear una cuenta de Meta Developers
+-Se necesitó un entorno virtual para funcionar
+-Se necesita crear una cuenta de Facebook Business
+
+PASO 1: Usar Api
+-En el menú principal se da clic en "Mis Apps"
+-Seleccionamos de tipo "Negocio" al menos en este caso
+-Se escoge el nombre de la app, el correo de contacto, se selecciona la cuenta de negocio de Facebook Business
+-De los productos para la app se escoge WhatsApp
+-Se da clic en "Empezar a usar la API"
+-Se da de alta los teléfonos que se pueden mandar mensajes
+
+PASO 2: TOKEN PERMANENTE
+-Entras al link https://developers.facebook.com/apps/
+-Buscas la app y le das clic en el nombre de tu negocio
+-Buscar en la barra lateral "Usuarios el sistema"
+-Dar clic en "Agregar"
+-Agregar nombre del usuario y su rol (en este caso Administrador)
+-Dar clic en "Agregar activos"
+-Damos clic en "Apps", seleccionamos el nombre de la app y activar el switch de "Administrar app"
+-Clic en guardar cambios
+-Dar clic en la app que aparece en la lista de Activos asignados
+-Se selecciona la app del combobox, en "Token expiration" le pondremos "Permanente"
+-Damos los permisos en "whatsapp_business_messaging" y "whatsapp_business_management"
+-Dar clic en generar token
+-Copia el token en el programa
+
+ACTIVAR ENTORNO VIRTUAL
+venv\Scripts\activate
+
+
+CODIGO JSON EJEMPLO
+url: http://localhost:3000/send-message
+Content-type: application/json
+body waw json: 
+{
+  "template": "notificacion_reporte",
+  "phones": ["526645080372","526643087118"], 
+  "params": ["Jose", "Jose@hotmail.com"]
+}
+
+Al final se usó una plantilla llamada notificación_cita, igual el payload funciona con eso.
+
+Para el servidor se necesita usar pm2 en el entorno virtual.
+cd Notifier
+source venv/bin/activate
+
+pm2 start notifier.py --interpreter python3	(INICIAR EL PROCESO)
+pm2 list					(CHECAR LISTA DE PROCESOS)
+pm2 stop notifier.py				(DETENER EL PROCESO)
