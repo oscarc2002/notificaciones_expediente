@@ -4,19 +4,16 @@ import requests
 app = Flask(__name__)
 
 # Configuración de la API de WhatsApp Cloud
-WHATSAPP_TOKEN = ""
-PHONE_NUMBER_ID = "552863861251163"
+#WHATSAPP_TOKEN = ""
+#PHONE_NUMBER_ID = "552863861251163"
+WHATSAPP_TOKEN = "EAAOyfPaqodoBOZCCnrbSY6h2pMzzlnsLZCtfhGl5tJb8Ep3yIvFmmLseRTagFcsMZBjwHuwkxhNn30VrZCLbkMpgeGxr1NHAbNg1FQpoAy5VgSR5QV6uElpNHom9yEfhK8BEaHYdlcV6PMFcMnIQZAZBDgVZApalvortEhqA7JBVGgfj0RfLuFGzOC2fAiBFBScwwZDZD"
+PHONE_NUMBER_ID = "676245675568840"
 WHATSAPP_API_URL = f"https://graph.facebook.com/v22.0/{PHONE_NUMBER_ID}/messages"
 
 HEADERS = {
     "Authorization": f"Bearer {WHATSAPP_TOKEN}",
     "Content-Type": "application/json"
 }   
-
-plantillas = {
-    "notificacion_cita": ["message"],
-    "notificacion_reporte": ["name", "email"]
-}
 
 @app.route('/send-message', methods=['POST'])
 def send_message():
@@ -28,13 +25,6 @@ def send_message():
 
         if not template or not phones:
             return jsonify({"error": "Faltan campos obligatorios (template o phone)"}), 400
-
-        if template not in plantillas:
-            return jsonify({"error": f"Plantilla '{template}' no está registrada"}), 400
-
-        cant_params = plantillas[template]
-        if len(cant_params) != len(params):
-            return jsonify({"error": f"La plantilla '{template}' requiere {len(cant_params)} parámetros, se recibieron {len(params)}"}), 400
 
         results = []
         for phone in phones:
